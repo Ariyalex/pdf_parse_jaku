@@ -12,5 +12,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code
 COPY app /app/app
 
-# Use Gunicorn to run the application
-CMD ["sh", "-c", "gunicorn -w 4 -b 0.0.0.0:${PORT:-5000} app.main:app"]
+# Use Waitress to run the application
+CMD ["waitress-serve", "--port=${PORT:-5000}", "app.main:app"]
