@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, render_template, send_file
 import os
 import sys
 import logging
-from app.pdf_processor import extract_text_from_pdf, parse_jadwal
 import json
 import traceback
 import datetime
@@ -11,11 +10,20 @@ import datetime
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
+    handlers=[logging.StreamHandler(sys.stdout)]
 )
 
+# Try different import approaches to handle potential module issues
+try:
+    from app.pdf_processor import extract_text_from_pdf, parse_jadwal
+    logging.info("Successfully imported pdf_processor from app package")
+except ImportError:
+    try:
+        from pdf_processor import extract_text_from_pdf, parse_jadwal
+        logging.info("Successfully imported pdf_processor directly")
+    except ImportError:
+        logging.error("Failed to import pdf_processor module")
+        
 # Initialize Flask app
 app = Flask(__name__)
 

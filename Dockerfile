@@ -15,5 +15,5 @@ COPY . .
 # Create uploads directory
 RUN mkdir -p /app/app/uploads
 
-# Use simple gunicorn command
-CMD gunicorn --bind 0.0.0.0:8080 app.main:app
+# Use Railway's PORT environment variable with a shell command
+CMD sh -c "gunicorn --workers=2 --threads=4 --timeout=120 --bind 0.0.0.0:\${PORT:-8080} app.main:app"
