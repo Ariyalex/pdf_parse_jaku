@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app /app/app
 
 # Use Waitress to run the application
-CMD ["python", "-c", "import os; from waitress import serve; from app.main import app; serve(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))"]
+CMD ["python", "-c", "import os; from waitress import serve; from app.main import app; serve(app, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))"]

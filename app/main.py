@@ -87,6 +87,10 @@ def download_file():
         return send_file(json_file_path, as_attachment=True)
     return jsonify({"error": "File not found"}), 404
 
+@app.route('/health')
+def health_check():
+    return jsonify({"status": "healthy"}), 200
+
 if __name__ == '__main__':
     if not os.environ.get('PORT'):
         print("[WARNING] Environment variable 'PORT' is not set. Using default port 5000.")
