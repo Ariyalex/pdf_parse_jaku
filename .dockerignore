@@ -1,0 +1,24 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore environment files
+.env
+
+# Ignore Docker-related files
+Dockerfile
+.dockerignore
+
+# Ignore any local configuration files
+*.local
+
+# Ignore any log files
+*.log
+
+# Ignore any temporary files
+*.tmp
+*.temp
+
+# Ignore any PDF files that are not needed for the build
+*.pdf
