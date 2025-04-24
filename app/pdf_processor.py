@@ -3,6 +3,10 @@ import os
 import fitz  # PyMuPDF
 import json
 import re
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
 
@@ -177,32 +181,40 @@ def home():
 
 @app.route('/upload', methods=['POST'])
 def upload_pdf():
-    if 'file' not in request.files:
-        return jsonify({"error": "No file part"}), 400
-    
-    file = request.files['file']
-    
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-    
-    if file and file.filename.endswith('.pdf'):
-        # Save the uploaded PDF file temporarily
-        temp_file_path = os.path.join('temp', file.filename)
-        os.makedirs(os.path.dirname(temp_file_path), exist_ok=True)
-        file.save(temp_file_path)
-        
-        # Extract text and parse it
-        text = extract_text_from_pdf(temp_file_path)
-        save_raw_text(text, "raw_pdf_text.txt")  # Save raw text
-        output_file = "jadwal_mahasiswa.json"
-        parsed_data = parse_jadwal(text, output_file)  # Parse and save JSON
-        
-        # Clean up the temporary file
-        os.remove(temp_file_path)
-        
-        return jsonify(parsed_data), 200
-    
-    return jsonify({"error": "Invalid file format"}), 400
+    try:
+        if 'file' not in request.files:
+            logging.error("No file part in the request")
+            return jsonify({"error": "No file part"}), 400
+
+        file = request.files['file']
+
+        if file.filename == '':
+            logging.error("No selected file")
+            return jsonify({"error": "No selected file"}), 400
+
+        if file and file.filename.endswith('.pdf'):
+            # Save the uploaded PDF file temporarily
+            temp_file_path = os.path.join('temp', file.filename)
+            os.makedirs(os.path.dirname(temp_file_path), exist_ok=True)
+            file.save(temp_file_path)
+
+            # Extract text and parse it
+            text = extract_text_from_pdf(temp_file_path)
+            save_raw_text(text, "raw_pdf_text.txt")  # Save raw text
+            output_file = "jadwal_mahasiswa.json"
+            parsed_data = parse_jadwal(text, output_file)  # Parse and save JSON
+
+            # Clean up the temporary file
+            os.remove(temp_file_path)
+
+            return jsonify(parsed_data), 200
+
+        logging.error("Invalid file format")
+        return jsonify({"error": "Invalid file format"}), 400
+
+    except Exception as e:
+        logging.exception("An error occurred during file upload")
+        return jsonify({"error": "Internal Server Error", "message": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
