@@ -5,6 +5,7 @@ import logging
 from app.pdf_processor import extract_text_from_pdf, parse_jadwal
 import json
 import traceback
+import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -120,7 +121,17 @@ def download_file():
 @app.route('/health')
 def health_check():
     logger.info("Health check endpoint accessed")
-    return jsonify({"status": "healthy", "message": "Application is running correctly"}), 200
+    return jsonify({
+        "status": "healthy", 
+        "message": "Application is running correctly",
+        "timestamp": datetime.datetime.now().isoformat(),
+        "version": "1.0.0"
+    }), 200
+
+# Add simple ping endpoint that returns minimal response
+@app.route('/ping')
+def ping():
+    return "pong", 200
 
 if __name__ == '__main__':
     try:
