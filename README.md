@@ -54,7 +54,3 @@ railway-backend
 
 - Send a POST request to `/upload` with the PDF file as form data.
 - The server will process the PDF and return a JSON file containing the extracted data.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
