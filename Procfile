@@ -1,1 +1,1 @@
-web: python -c "import os; from waitress import serve; from app.main import app; serve(app, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))"
+web: gunicorn --bind 0.0.0.0:8080 app.main:app
