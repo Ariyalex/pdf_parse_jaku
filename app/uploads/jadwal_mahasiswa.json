@@ -1,0 +1,157 @@
+{
+    "nama": "ARIYA DUTA",
+    "nim": "23106050032",
+    "semester": "SEMESTER GENAP",
+    "tahun_akademik": "2024/2025",
+    "program_studi": "Informatika",
+    "jadwal": [
+        {
+            "no": 1,
+            "mata_kuliah": "Basis Data",
+            "sks": 4,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Senin",
+                    "waktu": "15:30-17:15",
+                    "ruangan": "FST-408"
+                },
+                {
+                    "hari": "Selasa",
+                    "waktu": "10:40-12:20",
+                    "ruangan": "FST-405"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Muhammad Didik Rohmad Wahyudi, S.T., MT."
+                }
+            ]
+        },
+        {
+            "no": 2,
+            "mata_kuliah": "Grafis dan Visualisasi",
+            "sks": 2,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Selasa",
+                    "waktu": "13:25-15:10",
+                    "ruangan": "FST-407"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Ir. Aulia Faqih Rifa'i, M.Kom."
+                }
+            ]
+        },
+        {
+            "no": 3,
+            "mata_kuliah": "Interaksi Manusia dan Komputer",
+            "sks": 2,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Jum'at",
+                    "waktu": "08:50-10:30",
+                    "ruangan": "FST-407"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Eko Hadi Gunawan, M.Eng."
+                },
+                {
+                    "nama": "Nia Maharani Raharja, M.Eng."
+                }
+            ]
+        },
+        {
+            "no": 4,
+            "mata_kuliah": "Metode Pengembangan Perangkat Lunak",
+            "sks": 4,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Senin",
+                    "waktu": "07:00-08:45",
+                    "ruangan": "FST-407"
+                },
+                {
+                    "hari": "Selasa",
+                    "waktu": "15:30-17:15",
+                    "ruangan": "FST-407"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Agus Mulyanto, S.Si., M.Kom."
+                },
+                {
+                    "nama": "Ir. Daru Prasetyawan, S.T., M.Kom."
+                }
+            ]
+        },
+        {
+            "no": 5,
+            "mata_kuliah": "Perancangan Algoritma dan Pemrograman",
+            "sks": 4,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Senin",
+                    "waktu": "10:40-13:20",
+                    "ruangan": "FST-305"
+                },
+                {
+                    "hari": "Kamis",
+                    "waktu": "10:40-13:20",
+                    "ruangan": "FST-301"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Maria Ulfah Siregar, S.Kom. MIT., Ph.D."
+                },
+                {
+                    "nama": "Dwi Otik Kurniawati, M.Eng."
+                }
+            ]
+        },
+        {
+            "no": 6,
+            "mata_kuliah": "Perancangan Struktur Data",
+            "sks": 2,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Rabu",
+                    "waktu": "08:50-10:35",
+                    "ruangan": "FST-305"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Nurochman, S.Kom., M.Kom"
+                }
+            ]
+        },
+        {
+            "no": 7,
+            "mata_kuliah": "Rekayasa Perangkat Lunak",
+            "sks": 4,
+            "jadwal_kuliah": [
+                {
+                    "hari": "Kamis",
+                    "waktu": "13:25-15:10",
+                    "ruangan": "FST-103"
+                },
+                {
+                    "hari": "Jum'at",
+                    "waktu": "07:00-08:45",
+                    "ruangan": "FST-407"
+                }
+            ],
+            "dosen": [
+                {
+                    "nama": "Muhammad Mustakim, S.T. M.T."
+                }
+            ]
+        }
+    ]
+}
