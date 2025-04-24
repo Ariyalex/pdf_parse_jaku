@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, send_file
 import os
-from pdf_processor import extract_text_from_pdf, parse_jadwal
+from app.pdf_processor import extract_text_from_pdf, parse_jadwal
 import json
 
 app = Flask(__name__)
