@@ -100,13 +100,13 @@ def parse_jadwal(pdf_text, output_file="jadwal_mahasiswa.json"):
                 jadwal_line = lines[i].strip()
                 
                 # If the line contains a schedule, we can add it to "jadwal_kuliah"
-                if re.search(r"R:\s*FST", jadwal_line):
+                if re.search(r"R:", jadwal_line):
                     # Fix bug #2 and #3: Separate schedule from lecturer if they're on the same line
-                    parts = jadwal_line.strip().split("R: FST-")
+                    parts = jadwal_line.strip().split("R: ")
                     if len(parts) >= 2:
                         day_time = parts[0].strip()
-                        # Extract only the room number part (e.g., "305" from "R: FST-305")
-                        room_number = parts[1].strip().split(" ", 1)[0]
+                        # Extract only the room number part (e.g., "FST-305" from "R: FST-305")
+                        room_info = parts[1].strip().split(" ", 1)[0]
                         
                         # Extract schedule components
                         day_match = re.match(r"([^,]+),", day_time)
@@ -115,8 +115,8 @@ def parse_jadwal(pdf_text, output_file="jadwal_mahasiswa.json"):
                         if day_match and time_match:
                             day = day_match.group(1).strip()
                             time = time_match.group(1).strip()
-                            # Use "FST-{room_number}" format without the "R: " prefix
-                            room = f"FST-{room_number}"
+                            # Use the room information as is, without modifying the format
+                            room = room_info
                             
                             # Add structured schedule
                             current["jadwal_kuliah"].append({
