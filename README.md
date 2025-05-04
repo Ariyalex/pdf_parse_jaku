@@ -1,4 +1,4 @@
-# Railway Backend Project
+# JaKu PDF Parsing
 
 This project is a backend application that accepts a PDF file as input and outputs a structured JSON file. It utilizes Flask for handling web requests and PyMuPDF for PDF processing.
 
