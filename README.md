@@ -5,7 +5,7 @@ This project is a backend application that accepts a PDF file as input and outpu
 ## Project Structure
 
 ```
-railway-backend
+pdf_parse_jaku
 ├── app
 │   ├── main.py          # Entry point of the application
 │   ├── pdf_processor.py  # Logic for processing PDF files
@@ -23,7 +23,7 @@ railway-backend
 1. **Clone the repository:**
    ```
    git clone <repository-url>
-   cd railway-backend
+   cd pdf_parsing_jaku
    ```
 
 2. **Install dependencies:**
@@ -46,8 +46,8 @@ railway-backend
 4. **Using Docker:**
    To build and run the application using Docker, execute the following commands:
    ```
-   docker build -t railway-backend .
-   docker run -p 5000:5000 railway-backend
+   docker build -t pdf_parsing_jaku .
+   docker run -p 5000:5000 pdf_parsing_jaku
    ```
 
 ## Usage
