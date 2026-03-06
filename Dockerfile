@@ -16,4 +16,4 @@ COPY . .
 RUN mkdir -p /app/app/uploads
 
 # Use Railway's PORT environment variable with a shell command
-CMD sh -c "gunicorn --workers=2 --threads=4 --timeout=120 --bind 0.0.0.0:\${PORT:-8080} app.main:app"
+CMD sh -c "gunicorn --workers=2 --threads=4 --timeout=120 --bind 0.0.0.0:\${PORT:-8000} app.main:app"
