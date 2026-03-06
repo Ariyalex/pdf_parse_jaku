@@ -34,7 +34,7 @@ def parse_jadwal(pdf_text):
         "semester": "",
         "tahun_akademik": "",
         "program_studi": "",
-        "schedules": []
+        "matkuls": []
     }
 
     # Extract student information handling line breaks between key and value
@@ -64,12 +64,12 @@ def parse_jadwal(pdf_text):
         # Detect course number (1, 2, 3, ...)
         if re.match(r"^\d+\s*$", line):
             if current:
-                info["schedules"].append(current)
+                info["matkuls"].append(current)
             current = {
                 "id": str(uuid.uuid4()),
                 "name": "",
                 "sks": 0,
-                "schedule": [],
+                "schedules": [],
                 "lecturers": []
             }
             i += 1
@@ -88,7 +88,7 @@ def parse_jadwal(pdf_text):
                 current["sks"] = int(lines[i].strip())
                 i += 1
 
-            # Get class schedule and lecturers
+            # Get class schedules and lecturers
             while i < len(lines):
                 jadwal_line = lines[i].strip()
                 
@@ -107,7 +107,7 @@ def parse_jadwal(pdf_text):
                             start_time = f"{times[0]}:00" if len(times) > 0 else ""
                             end_time = f"{times[1]}:00" if len(times) > 1 else ""
                             
-                            current["schedule"].append({
+                            current["schedules"].append({
                                 "id": str(uuid.uuid4()),
                                 "day": day_match.group(1).strip(),
                                 "start_time": start_time,
@@ -131,10 +131,10 @@ def parse_jadwal(pdf_text):
             i += 1
 
     if current:
-        info["schedules"].append(current)
+        info["matkuls"].append(current)
 
     # Clean up duplicate lecturers
-    for course in info["schedules"]:
+    for course in info["matkuls"]:
         unique_dosens = []
         seen_names = set()
         for dosen in course["lecturers"]:
