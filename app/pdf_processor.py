@@ -3,6 +3,7 @@ import fitz  # PyMuPDF
 import json
 import re
 import logging
+import uuid
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -65,6 +66,7 @@ def parse_jadwal(pdf_text):
             if current:
                 info["jadwal"].append(current)
             current = {
+                "id": str(uuid.uuid4()),
                 "mata_kuliah": "",
                 "sks": 0,
                 "jadwal_kuliah": [],
@@ -101,6 +103,7 @@ def parse_jadwal(pdf_text):
                         
                         if day_match and time_match:
                             current["jadwal_kuliah"].append({
+                                "id": str(uuid.uuid4()),
                                 "hari": day_match.group(1).strip(),
                                 "waktu": time_match.group(1).strip(),
                                 "ruangan": room_info
