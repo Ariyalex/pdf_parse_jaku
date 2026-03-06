@@ -29,12 +29,12 @@ def parse_jadwal(pdf_text):
     lines = pdf_text.splitlines()
 
     info = {
-        "nama": "",
+        "name": "",
         "nim": "",
         "semester": "",
         "tahun_akademik": "",
         "program_studi": "",
-        "jadwal": []
+        "schedules": []
     }
 
     # Extract student information handling line breaks between key and value
@@ -47,7 +47,7 @@ def parse_jadwal(pdf_text):
         elif "Tahun Akademik" in line:
             info["tahun_akademik"] = line.split(":")[-1].strip()
         elif line == "Nama Mahasiswa" and i+1 < len(lines) and ":" in lines[i+1]:
-            info["nama"] = lines[i+1].split(":")[-1].strip()
+            info["name"] = lines[i+1].split(":")[-1].strip()
         elif line == "Semester" and i+1 < len(lines) and ":" in lines[i+1]:
             info["semester"] = lines[i+1].split(":")[-1].strip()
         elif line == "Program Studi" and i+1 < len(lines) and ":" in lines[i+1]:
@@ -64,23 +64,23 @@ def parse_jadwal(pdf_text):
         # Detect course number (1, 2, 3, ...)
         if re.match(r"^\d+\s*$", line):
             if current:
-                info["jadwal"].append(current)
+                info["schedules"].append(current)
             current = {
                 "id": str(uuid.uuid4()),
-                "mata_kuliah": "",
+                "name": "",
                 "sks": 0,
-                "jadwal_kuliah": [],
-                "dosen": []
+                "schedule": [],
+                "lecturers": []
             }
             i += 1
             
             # Handle multi-line course names
             if i < len(lines):
-                current["mata_kuliah"] = lines[i].strip()
+                current["name"] = lines[i].strip()
                 i += 1
             
             while i < len(lines) and not re.match(r"^\d+$", lines[i].strip()) and not re.match(r"^\d+\s*$", lines[i].strip()):
-                current["mata_kuliah"] += " " + lines[i].strip()
+                current["name"] += " " + lines[i].strip()
                 i += 1
 
             # Get SKS
@@ -102,22 +102,28 @@ def parse_jadwal(pdf_text):
                         time_match = re.search(r"(\d+:\d+-\d+:\d+)", day_time)
                         
                         if day_match and time_match:
-                            current["jadwal_kuliah"].append({
+                            waktu_full = time_match.group(1).strip()
+                            times = waktu_full.split("-")
+                            start_time = f"{times[0]}:00" if len(times) > 0 else ""
+                            end_time = f"{times[1]}:00" if len(times) > 1 else ""
+                            
+                            current["schedule"].append({
                                 "id": str(uuid.uuid4()),
-                                "hari": day_match.group(1).strip(),
-                                "waktu": time_match.group(1).strip(),
-                                "ruangan": room_info
+                                "day": day_match.group(1).strip(),
+                                "start_time": start_time,
+                                "end_time": end_time,
+                                "room": room_info
                             })
                         
                         if len(parts[1].split(" ", 1)) > 1:
                             dosen_name = re.sub(r"\(\d{8} \d{6} \d \d{3}\)", "", parts[1].split(" ", 1)[1]).strip()
                             if dosen_name and len(dosen_name) >= 6:
-                                current["dosen"].append({"nama": dosen_name})
+                                current["lecturers"].append({"name": dosen_name})
                     i += 1
                 elif not re.search(r"^(Senin|Selasa|Rabu|Kamis|Jum'at|Sabtu|Minggu),", jadwal_line) and jadwal_line and not re.match(r"^\d+\s*$", jadwal_line):
                     dosen_name = re.sub(r"\(\d{8} \d{6} \d \d{3}\)", "", jadwal_line).strip()
                     if dosen_name and len(dosen_name) >= 6:
-                        current["dosen"].append({"nama": dosen_name})
+                        current["lecturers"].append({"name": dosen_name})
                     i += 1
                 else:
                     break
@@ -125,16 +131,16 @@ def parse_jadwal(pdf_text):
             i += 1
 
     if current:
-        info["jadwal"].append(current)
+        info["schedules"].append(current)
 
     # Clean up duplicate lecturers
-    for course in info["jadwal"]:
+    for course in info["schedules"]:
         unique_dosens = []
         seen_names = set()
-        for dosen in course["dosen"]:
-            if dosen["nama"] not in seen_names:
-                seen_names.add(dosen["nama"])
+        for dosen in course["lecturers"]:
+            if dosen["name"] not in seen_names:
+                seen_names.add(dosen["name"])
                 unique_dosens.append(dosen)
-        course["dosen"] = unique_dosens
+        course["lecturers"] = unique_dosens
 
     return info
